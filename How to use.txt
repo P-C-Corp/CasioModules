@@ -1,0 +1,5 @@
+1) download the repos code
+2) connect your calculator in usb mode to your computer
+3) Locate the @python folder in the storage memory and open it
+5) drag and drop python scripts in it 
+6) enjoy it (and read our docs)
