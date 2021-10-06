@@ -1,0 +1,16 @@
+Priorité au programme de première en maths/physique
+
+Ensuite on suivra notre programme de terminale au fur et à mesure
+
+
+
+Objectif final : compiler tous les modules dans un script PCcorp.py pour accéder à tous les modules via des classes par theme et des fonction
+
+from PCcorp import *
+#répartition des modules
+
+dérivées = dérivées()
+
+suitesGéométriques = SuiteGéométrique()
+
+Etc...
