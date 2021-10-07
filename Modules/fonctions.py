@@ -17,15 +17,19 @@ class degre1():
                 a = float(a)
             else:
                 return ('a = 0, No solutions')
-            bLenght = (len(ab) - 1 -operator)
-            print(bLenght)
-            b = float(ab[:bLenght].replace('x',""))
+            ab = ab.split('-')
+            b = -1*(float(ab[1]))
         elif "+" in ab:
-            operator = ab.find('-')
+            operator = ab.find('+')
             a = float(ab[:operator - 1].replace('x',""))
-            b = float(ab[:-operator].replace('x',""))
-        else:
-            a = float(ab.replace('x',""))
+            a = ab[:operator].replace('x',"")
+            if a != '':
+                a = float(a)
+            else:
+                return ('a = 0, No solutions')
+            ab = ab.split('+')
+            b = (float(ab[1]))
+            
         x = (c-b)/a
         print('a =', a)
         print('b = ', b)
