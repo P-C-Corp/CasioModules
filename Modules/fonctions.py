@@ -39,40 +39,68 @@ class degre1():
       try:
         int(x) # enlève le .0  si x est entier de façon plus conventionelle (;
       except ValueError:
-        pass
-      return x
+        pass #laisse un nombre à virgule si x est décimal
+      return x # renvoie la valeur x à la ligne d'appel
 
 class degre2():
-  def solve(a, b, c, complexMode=False): #défini la fonction avce les constantes et le mode complexe (désactivé par défaut)
+  def Delta(a,b,c):
     try:
       a= float(a) #
       b=float(b)  # converti les constantes en nombre au cas ou
       c=float(c)  #
       delta = (b**2) - (4*a*c) # calcul de delta
+      return delta #renvoie la valeur
+    except ValueError or TypeError:
+      raise ValueError('Constants must be numbers')
+
+  def solve(a, b, c, complexMode=False): #défini la fonction avce les constantes et le mode complexe (désactivé par défaut)
+    try:
+      a= float(a) #
+      b=float(b)  # converti les constantes en nombre au cas ou
+      c=float(c)  #
+      delta = degre2.Delta(a, b, c)
       if delta > 0: #cas supérieur à 0
         x1 = (-b-sqrt(delta))/(2*a) #calcul des racines
         x2 = (-b+sqrt(delta))/(2*a) # 
-        return [delta, x1, x2] #renvoie les racines à la ligne d'appel
+        return [delta, x1, x2] #renvoie delta et les racines à la ligne d'appel
       elif delta == 0: #cas égal 0
         x = (-b)/(2*a) #calcul de la racine
-        return [delta, x]
+        return [delta, x] # renvoie delta et la racine
       elif delta < 0 and complexMode: #delta negatif et solution complexes demandées
-        z1 = str((-b)/(2*a)) + '+i' + str(abs(sqrt(-delta)/2*a)) 
-        z2 = str((-b)/(2*a)) + '-i' + str(abs(sqrt(-delta)/2*a))
-        return [delta, z1, z2]
+        if -b/(-b)/(2*a) != 0:
+          RE_racines = (-b)/(2*a)             
+          IM_racines = abs((sqrt(-delta))/(2*a))   #calcul des parties des racines
+          """formatage"""
+          try:
+            RE_racines = int(RE_racines)
+          except ValueError or TypeError:
+            pass
+          try:
+            IM_racines = int(IM_racines)
+          except TypeError or ValueError:
+            pass
+          if RE_racines == 0:
+            RE_racines = ""
+            z1 = RE_racines + 'i' + str(IM_racines) 
+          else:
+            z1 = RE_racines + '+i' + str(IM_racines) 
+          z2 = RE_racines + '-i' + str(IM_racines)  #calcul des racines complexes x+iy
+        return [delta, z1, z2] # renvoie delta et les racines
       else:
         return [delta] #delta négatif pas de solution(s)
 
     except TypeError or ValueError:
-      raise ValueError('An error occured, please check your entries') #gestion des erreurs relatives aux valeurs
+      raise ValueError('An error occured, please check your constants') #gestion des erreurs relatives aux valeurs
 
   def canon(a, b, c):
-    roots = degre2.solve(a, b, c, False)
-    a= float(a) #
-    b=float(b)  # converti les constantes en nombre au cas ou
-    c=float(c)  #
+    try:
+      a= float(a) #
+      b=float(b)  # converti les constantes en nombre au cas ou
+      c=float(c)  #
+    except ValueError or TypeError:
+      raise ValueError('Constants must be numbers')
     beta = b/(2*a)
-    delta = roots[0]
+    delta = degre2.Delta(a, b, c)
     if delta < 0:
       raise ValueError('Delta is negative')
     alpha = delta/(4*(a**2))
@@ -86,7 +114,15 @@ class degre2():
     canonic = canonic.replace('--', "+")
     return canonic
 
+  def factor(a, b, c):
+    try:
+      a= float(a) #
+      b=float(b)  # converti les constantes en nombre au cas ou
+      c=float(c)  #
+    except ValueError or TypeError:
+      raise ValueError('Constants must be numbers')
 
 
-print(degre2.canon(input('a'), input('b'), input('c')))
+
+print(degre2.solve(input('a'), input('b'), input('c'), True))
 
