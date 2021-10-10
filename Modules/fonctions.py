@@ -1,5 +1,5 @@
 from math import *
-#équations de degré 1
+
 class degre1():
     def solve(equation):   
       if not "=" in equation:                                                           #
@@ -121,6 +121,41 @@ class degre2():
       c=float(c)  #
     except ValueError or TypeError:
       raise ValueError('Constants must be numbers')
+    roots = degre2.solve(a, b, c)
+    delta = roots[0]
+    if delta == 0:
+      x0 = roots[1]
+      try:
+        x0 = int(x0)
+      except ValueError or TypeError:
+        pass
+      try:
+        a = int(a)
+      except ValueError or TypeError:
+        pass
+      factorized = f"{a}(x-{x0})^2 "
+      factorized = factorized.replace('--', "+")
+      return factorized
+    elif delta > 0:
+      x1 = roots[1]
+      x2 = roots[2]
+      try:
+        x1 = int(x1)
+      except ValueError or TypeError:
+        pass
+      try:
+        x2 = int(x2)
+      except ValueError or TypeError:
+        pass
+      try:
+        a = int(a)
+      except ValueError or TypeError:
+        pass
+      factorized = f"{a}(x-{x1})(x-{x2}) "
+      factorized = factorized.replace('--', "+")
+      return factorized
+    elif delta <0:
+      raise ValueError("Can't factorise with negative delta")
 
 
 
