@@ -1,5 +1,5 @@
 from math import*
-from random import*
+from lycee import*
 
 class SA():
     def solve(formula,n):
@@ -9,7 +9,10 @@ class SA():
             float(n)
         except ValueError or TypeError:
             raise ValueError('n must be number')
-        return n
+        
+        for i in formula:
+            if i == "n":
+                pos = formula.index(i)
 
 
 print(SA.solve(input('formula : '), input('n : ')))
