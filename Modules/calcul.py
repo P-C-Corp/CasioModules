@@ -3,6 +3,8 @@ import math
 div = div()
 quotient = div.solve()
 class operations():
+    def __init__(self) -> None:
+        pi = math.pi
     def p(a,n):
         return a**n
 
@@ -27,3 +29,5 @@ class operations():
             return quotient(math.factorial(n),math.factorial(p) * math.factorial(n - p))
         else :
             return 0
+    
+    
