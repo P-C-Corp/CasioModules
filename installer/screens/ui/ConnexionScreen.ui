@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>PC Corp - Installer</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -44,7 +47,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../../Mathéo/code/CasioModules/assets/logo.png</pixmap>
+    <pixmap>../../../../../../Mathéo/code/CasioModules/assets/logo.png</pixmap>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
@@ -61,6 +64,9 @@
    </property>
   </widget>
   <widget class="QCheckBox" name="checkBox">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>430</x>
@@ -97,6 +103,9 @@
    </property>
    <property name="text">
     <string>See documentation</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
