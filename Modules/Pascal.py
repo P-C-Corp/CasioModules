@@ -4,7 +4,7 @@ class Pascal():
 
     def run(limit):
         try:
-            limit = int(limit)
+            limit = int(limit) + 1
         except ValueError or TypeError:
             raise ValueError('Pascal line number must be integer')
         if limit > 2:
@@ -26,7 +26,7 @@ class Pascal():
 
     def coef(limit):
         try:
-            limit = int(limit)
+            limit = int(limit) + 1
         except ValueError or TypeError:
             raise ValueError('Pascal line number must be integer')
         if limit > 2:
