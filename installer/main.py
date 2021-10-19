@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5.QtCore import pyqtSignal
 import sys
 import os
 import platform
@@ -52,14 +53,21 @@ class Connect(QtWidgets.QMainWindow):
     def toggled(self):
         self.cb.setChecked(QtCore.Qt.Checked)
         
-    def connectPushed(self):
-        self.pb.setEnabled(False)
-        print(widgets.currentIndex())
-        widgets.setCurrentIndex(widgets.currentIndex()+1)
+
         
+        
+        
+    def connectPushed(self, event):
+        self.win = Connexion()
+        
+        self.win.show()
+        self.window_closed.emit()
+        event.accept()
+
 
 
 class Connexion(QtWidgets.QMainWindow):
+    window_closed = pyqtSignal()
     def __init__(self):
         
         super(Connexion, self).__init__() # Call the inherited classes __init__ method
@@ -69,6 +77,12 @@ class Connexion(QtWidgets.QMainWindow):
 
 
         self.show()
+    
+    def closeWindow(self, event):
+        self.window_closed.emit()
+        event.accept()
+        
+        
 
     def load(self):
         for i in range(1, 101):
