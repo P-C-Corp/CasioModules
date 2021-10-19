@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>323</height>
+    <width>692</width>
+    <height>317</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>120</y>
-     <width>241</width>
+     <x>370</x>
+     <y>90</y>
+     <width>311</width>
      <height>81</height>
     </rect>
    </property>
@@ -38,9 +38,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>323</width>
-     <height>323</height>
+     <y>-10</y>
+     <width>321</width>
+     <height>331</height>
     </rect>
    </property>
    <property name="text">
@@ -50,40 +50,62 @@
     <pixmap>../../../../../../Mathéo/code/CasioModules/assets/logo.png</pixmap>
    </property>
   </widget>
-  <widget class="QProgressBar" name="progressBar">
+  <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>260</y>
-     <width>421</width>
-     <height>71</height>
+     <x>430</x>
+     <y>180</y>
+     <width>131</width>
+     <height>32</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>17</pointsize>
-    </font>
+   <property name="text">
+    <string>Connect</string>
    </property>
-   <property name="value">
-    <number>24</number>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>220</y>
+     <width>351</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offline mode</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>79</x>
-     <y>285</y>
-     <width>61</width>
-     <height>21</height>
+     <x>100</x>
+     <y>290</y>
+     <width>451</width>
+     <height>20</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>15</pointsize>
-    </font>
+   <property name="text">
+    <string>Offline mode requires ressources to have been previously downloaded</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>240</y>
+     <width>118</width>
+     <height>16</height>
+    </rect>
    </property>
    <property name="text">
-    <string>Loading</string>
+    <string>See documentation</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

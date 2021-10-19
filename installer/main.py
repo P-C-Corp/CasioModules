@@ -1,11 +1,12 @@
 from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtCore import pyqtSignal
+
+from PyQt5.QtCore import QThread, pyqtSignal
 import sys
 import os
 import platform
 import getpass
 import requests
-
+import time
 
 global app
 app = None
@@ -17,6 +18,9 @@ def isNetwork()->bool:
     except (requests.ConnectionError, requests.Timeout) as exception:
         print("No internet connection.")
 
+global path
+path = os.path.abspath(os.path.dirname(__file__))
+
 def PathToFiles()->str:
     if platform.system() == 'Windows':
         path = str(r"c:\Users\{}\PCCorp".format(getpass.getuser()))
@@ -24,13 +28,22 @@ def PathToFiles()->str:
     else:
         return f"/Users/{getpass.getuser()}/PCCorp"
 
-path = os.path.abspath(os.path.dirname(__file__))
+def pathToUi()->str:
+    global path
+    if platform.system() == 'Windows':
+        thePath = path+"/screens/ui/windows"
+        return thePath
+    else:
+        return path+"/screens/ui/unix"
+
+logo = "screens/images/logo.png"
+
 
 class Connect(QtWidgets.QMainWindow):
     def __init__(self):
         
         super(Connect, self).__init__() # Call the inherited classes __init__ method
-        uic.loadUi(f'{path}/screens/ui/ConnexionScreen.ui', self) # Load the .ui file
+        uic.loadUi(f'{pathToUi()}/ConnexionScreen.ui', self) # Load the .ui file
         self.cb = self.checkBox
         
         self.cb.toggled.connect(self.toggled)
@@ -43,6 +56,7 @@ class Connect(QtWidgets.QMainWindow):
             self.cb.setEnabled(False)
 
             self.cb.setToolTip('You must run installer online')
+        
         self.pb = self.pushButton
         self.pb.clicked.connect(self.connectPushed)
 
@@ -61,8 +75,11 @@ class Connect(QtWidgets.QMainWindow):
         self.win = Connexion()
         
         self.win.show()
-        self.window_closed.emit()
-        event.accept()
+        self.close()
+        for i in range(1, 101):
+            print(i)
+            Connexion.Progress(Connexion())
+        #event.accept()
 
 
 
@@ -71,22 +88,22 @@ class Connexion(QtWidgets.QMainWindow):
     def __init__(self):
         
         super(Connexion, self).__init__() # Call the inherited classes __init__ method
-        uic.loadUi(f'{path}/screens/ui/connecting.ui', self) # Load the .ui file
+        uic.loadUi(f'{pathToUi()}/connecting.ui', self) # Load the .ui file
 
-        
+        self.progressBar.setValue(0)
 
 
         self.show()
+        
+    def Progress(self):
+        pass
     
     def closeWindow(self, event):
         self.window_closed.emit()
         event.accept()
         
-        
 
-    def load(self):
-        for i in range(1, 101):
-            self.progressBar.setValue(i)
+    
 
 
 if __name__ == "__main__":
