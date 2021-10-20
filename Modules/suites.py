@@ -2,7 +2,7 @@ from math import*
 
 class suites():
     def solve(formula,n):
-        operators = "*+-/"
+        operators = "*+-/()"
         if not 'n'in formula:
             raise SyntaxError('no n found in formula')
         try:
@@ -20,7 +20,7 @@ class suites():
         return result
 
     def somme(formula,number, p=0):
-        operators = "*+-/"
+        operators = "*+-/()"
         if not 'n'in formula:
             raise SyntaxError('no n found in formula')
         try:
