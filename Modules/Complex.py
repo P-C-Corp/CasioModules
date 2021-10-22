@@ -39,10 +39,15 @@ for i in Liste:
     a = i.split("+")
     rezs[i] = a[0]
     imzs[i] = a[1].replace ("j","")
-wanted = []
-#pour le nb de complexe à sortir
 
-wantede = Liste.pop(int(input('Nombre 1 = ?')))
-print (wantede)
-print(rezs[wantede])
-print(imzs[wantede])
+wanted = []
+
+d = int(input("Number of complexe needed ="))
+e = 0
+while (e==0):
+    wanted = Liste.pop(int(input('Nombre 1 = ?')))
+    d -= 1
+
+print (wanted)
+print(rezs[wanted])
+print(imzs[wanted])
