@@ -49,7 +49,8 @@ class Connect(QtWidgets.QMainWindow):
         super(Connect, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi(f'{pathToUi()}/ConnexionScreen.ui', self) # Load the .ui file
         self.cb = self.checkBox
-        
+        self.setFixedWidth(700)
+        self.setFixedHeight(320)
         self.cb.toggled.connect(self.toggled)
 
         try:
@@ -94,7 +95,8 @@ class Connexion(QtWidgets.QMainWindow):
         uic.loadUi(f'{pathToUi()}/connecting.ui', self) # Load the .ui file
         self.label_2.setPixmap(QtGui.QPixmap(f"{path}/screens/images/logo.png"))
         self.progressBar.setValue(0)
-
+        self.setFixedWidth(700)
+        self.setFixedHeight(320)
         self.status = bool
         self.show()
         self.sendInvoice()
@@ -109,7 +111,28 @@ class Connexion(QtWidgets.QMainWindow):
         event.accept()
         
     
+class Alert(QtWidgets.QDialog):
+    EXIT_CODE_REBOOT = -123
+    window_closed = pyqtSignal()
+    def __init__(self):
+        
+        super(Alert, self).__init__() # Call the inherited classes __init__ method
+        self.setWindowTitle('Network Error')
+        self.setFixedWidth(300)
+        self.setFixedHeight(75)
+        
+        message = QtWidgets.QLabel("Can't find network,\nplease check your connexion and try again")
+        
+        self.button = QtWidgets.QPushButton('Ok')
+        self.layout = QtWidgets.QGridLayout()
+        self.layout.setColumnStretch( 300, 30)
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.button)
+        self.setLayout(self.layout)
 
+    
+    def RestartApp(self):
+        QtGui.qApp.exit(self.EXIT_CODE_REBOOT )
     
 
 class InvoiceRunnable(QtCore.QRunnable):
@@ -126,19 +149,19 @@ class InvoiceRunnable(QtCore.QRunnable):
             QtCore.Q_ARG(int, currentPercentage))
             if currentPercentage == 40:
                 if not isNetwork():
-                    print("no connexion")
+                    #dlg = Alert()
+                    
+                    #dlg.exec()
+                    break
                 else:
                     print("connected")
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication
-
-    widgets = QtWidgets.QStackedWidget()
-    connect = Connect()
-    connexion = Connexion()
-
-    widgets.addWidget(connect)
-    widgets.addWidget(connexion)
-    window = Connect() # Create an instance of our class
-    app.exec_() # Start the application
+    currentExitCode = Alert.EXIT_CODE_REBOOT
+    while currentExitCode == Alert.EXIT_CODE_REBOOT:
+        a = QtWidgets.QApplication(sys.argv)
+        w = Connect()
+        w.show()
+        currentExitCode = a.exec_()
+        a = None 
