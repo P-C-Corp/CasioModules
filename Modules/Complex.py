@@ -40,13 +40,15 @@ for i in Liste:
     rezs[i] = a[0]
     imzs[i] = a[1].replace ("j","")
 
-wanted = []
 
+wanted = []
 d = int(input("Number of complexe needed ="))
 e = 0
 while (e==0):
-    wanted = Liste.pop(int(input('Nombre 1 = ?')))
+    wanted = Liste.pop(int(input('Nombre (1er de la liste est 0)= ')))
     d -= 1
+    if (d==0):
+        break
 
 print (wanted)
 print(rezs[wanted])
