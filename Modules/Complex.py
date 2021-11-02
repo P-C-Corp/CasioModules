@@ -70,8 +70,8 @@ if (operation == 3):
         imzs = {}
         for i in numbers:
             a = i.split("+")
-            rezs[numbers.index(i)] = float(a[0])
-            imzs[numbers.index(i)] = float(a[1].replace("i",""))
+            rezs[numbers.index(i)] = float(a[0]) # explique pk a et 0 d'où ça vient ?
+            imzs[numbers.index(i)] = float(a[1].replace("i","")) #pareil pour le 1
         real = 0
         img = 0
         for rez in rezs.keys():
