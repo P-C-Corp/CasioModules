@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
-
-from PyQt5.QtCore import QThread, pyqtSignal
+import queue as q
+from PyQt5.QtCore import QObject, QTextStreamManipulator, QThread, QWaitCondition, pyqtSignal
 import sys
 import os
 import platform
@@ -153,8 +153,48 @@ class InvoiceRunnable(QtCore.QRunnable):
                     
                     #dlg.exec()
                     break
+                    
                 else:
+                    
+                    InMain.call(showDialog())
+
+
                     print("connected")
+
+def showDialog():
+    msgBox = QtWidgets.QMessageBox()
+    msgBox.setIcon(QtWidgets.QMessageBox.Information)
+    msgBox.setText("Message box pop up window")
+    msgBox.setWindowTitle("QMessageBox Example")
+    msgBox.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Close)
+    #msgBox.buttonClicked.connect(msgButtonClick)
+
+    returnValue = msgBox.exec()
+    if returnValue == QtWidgets.QMessageBox.Retry:
+        print('OK clicked')
+
+
+class InMain(QObject):
+
+    sig = pyqtSignal()
+    
+    def __init__(self):
+        super().__init__()
+        self.queue = q.Queue()
+	# Notice we use a Qt.QueuedConnection here, change to your liking.
+        self.sig.connect(self.execute_funs, QtCore.Qt.QueuedConnection)
+
+    def execute_funs(self):
+        while not self.queue.empty():
+            (fn, args, kwargs) = self.queue.get()
+            fn(*args, **kwargs)
+    
+    def call(self, fn, *args, **kwargs):
+        """Schedule a function to be called on the main thread."""
+        self.queue.put( (fn, args, kwargs) )
+        self.sig.emit()
+
+
 
 
 if __name__ == "__main__":

@@ -37,18 +37,17 @@ class Complexes():
                 
         return (Complexe)
 
-operation = int(input("operation ="))
-
-if (operation == 2):
     def addition():
         numbers = Complexes.liste() 
         rezs = {}
         imzs = {}
+        rank = 0
         for i in numbers:
             a = i.split("+")
-            rezs[numbers.index(i)] = float(a[0]) #explique pk a[0] d'où vient le 0 et le a ?
-            imzs[numbers.index(i)] = float(a[1].replace ("i","")) #explique pk a[1] d'où vient le 1 et le a ?
             
+            rezs[rank] = float(a[0]) #explique pk a[0] d'où vient le 0 et le a ?
+            imzs[rank] = float(a[1].replace ("i","")) #explique pk a[1] d'où vient le 1 et le a ?
+            rank += 1
         real = 0
         img = 0
         for rez in rezs.keys():
@@ -60,18 +59,22 @@ if (operation == 2):
         if (img<0):
             result = result.replace('+', '')
         return result
-    
-    print(addition())
 
-if (operation == 3):
     def substraction ():
         numbers = Complexes.liste()
         rezs = {}
         imzs = {}
+        rank = 0
         for i in numbers:
             a = i.split("+")
-            rezs[numbers.index(i)] = float(a[0]) # explique pk a et 0 d'où ça vient ?
-            imzs[numbers.index(i)] = float(a[1].replace("i","")) #pareil pour le 1
+            
+            rezs[rank] = float(a[0]) # explique pk a et 0 d'où ça vient ?
+            imzs[rank] = float(a[1].replace("i","")) #pareil pour le 1
+
+            rank += 1
+            
+            
+        
         real = 0
         img = 0
         for rez in rezs.keys():
@@ -83,8 +86,18 @@ if (operation == 3):
         if (img<0):
             result = result.replace("+","")
         return result
+
+operation = int(input("operation ="))
+
+if (operation == 2):
     
-    print(substraction())
+    
+    print(Complexes.addition())
+
+if (operation == 3):
+    
+    
+    print(Complexes.substraction())
 
 """# GROS PROBLEME:
 le programme n'arrive pas à additiuonner et soustraire deux complexes identiques.
