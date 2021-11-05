@@ -89,8 +89,22 @@ class Complexes():
         for i in numbers:
             a = i.split("+")
             rezs[rank] = float(a[0])
-            imzs[rank] = float(a[1])
+            imzs[rank] = float(a[1].replace("i",""))
             rank += 1
+            
+        a = rezs[0]; a0 = imzs[0] 
+        b = rezs[1]; b0 = imzs[1]
+        
+        long = len(rezs)
+        longb = len(imzs)
+        
+        if (long == longb == 2):
+            real = (a*b)-(a0*b0)
+            img = (a*b0)+(b*a0)
+            result = f"{real}+{img}i"
+            if (img<0):
+                result = result.replace("+","")
+        return result
 
     def division ():
         numbers = Complexes.liste()
@@ -100,7 +114,7 @@ class Complexes():
         for i in numbers:
             a = i.split("+")
             rezs[rank] = float(a[0])
-            imzs[rank] = float(a[1])
+            imzs[rank] = float(a[1].replace("i",""))
             rank += 1
 
 operation = int(input("operation ="))
