@@ -31,7 +31,7 @@ class Complexes():
                     Complex1 = f"{Rez}+i{Imz}"
                     Complexe.append(Complex1)
                     b -= 1
-
+                    
                     if (b==0):
                         break
                 
@@ -44,9 +44,8 @@ class Complexes():
         rank = 0
         for i in numbers:
             a = i.split("+")
-            
-            rezs[rank] = float(a[0]) #explique pk a[0] d'où vient le 0 et le a ?
-            imzs[rank] = float(a[1].replace ("i","")) #explique pk a[1] d'où vient le 1 et le a ?
+            rezs[rank] = float(a[0])
+            imzs[rank] = float(a[1].replace ("i",""))
             rank += 1
         real = 0
         img = 0
@@ -67,14 +66,9 @@ class Complexes():
         rank = 0
         for i in numbers:
             a = i.split("+")
-            
-            rezs[rank] = float(a[0]) # explique pk a et 0 d'où ça vient ?
-            imzs[rank] = float(a[1].replace("i","")) #pareil pour le 1
-
+            rezs[rank] = float(a[0])
+            imzs[rank] = float(a[1].replace("i",""))
             rank += 1
-            
-            
-        
         real = 0
         img = 0
         for rez in rezs.keys():
@@ -86,6 +80,28 @@ class Complexes():
         if (img<0):
             result = result.replace("+","")
         return result
+
+    def multiplication ():
+        numbers = Complexes.liste()
+        rezs = {}
+        imzs = {}
+        rank = 0
+        for i in numbers:
+            a = i.split("+")
+            rezs[rank] = float(a[0])
+            imzs[rank] = float(a[1])
+            rank += 1
+
+    def division ():
+        numbers = Complexes.liste()
+        rezs = {}
+        imzs = {}
+        rank = 0
+        for i in numbers:
+            a = i.split("+")
+            rezs[rank] = float(a[0])
+            imzs[rank] = float(a[1])
+            rank += 1
 
 operation = int(input("operation ="))
 
@@ -99,6 +115,12 @@ if (operation == 3):
     
     print(Complexes.substraction())
 
-"""# GROS PROBLEME:
-le programme n'arrive pas à additiuonner et soustraire deux complexes identiques.
-Au lieu de les additionner et soustraires il renvoit juste l'un des deux :/"""
+if (operation == 4):
+    
+    
+    print(Complexes.multiplication())
+
+if (operation == 5):
+    
+    
+    print(Complexes.division())
