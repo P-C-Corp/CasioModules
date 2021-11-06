@@ -136,7 +136,7 @@ class Complexes():
                 if (3<=v>=4):
                     k=1
                     a = reel[0+2*k]; a0 = imaginaire[0+2*k] 
-                    b = reel[1+2*k]; b0 = imaginaire[1+2*k]
+                    b = reel[1+2*k]; b0 = imaginaire[1+2*k] 
                     k+=1
                 v -= 1
         result = f"{real}+{img}i"
