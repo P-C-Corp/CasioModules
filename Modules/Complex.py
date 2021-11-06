@@ -96,6 +96,7 @@ class Complexes():
         b = rezs[1]; b0 = imzs[1]
         c = rezs[2]; c0 = imzs[2]
         d = rezs[3]; d0 = imzs[3]
+        e = rezs[4]; e0 = imzs[4]
         
         long = len(rezs)
         longb = len(imzs)
@@ -122,7 +123,14 @@ class Complexes():
             result = f'{real}+{img}i'
             if (img<0):
                 result = result.replace("+","")
-                
+            
+        if (long == longb == 5):
+            real = (a*b*c*d*e)-(a*b*c0*d0*e)-(a*b*c*d0*e0)-(a*b*c0*d*e0)-(a0*b0*c*d*e)+(a0*b0*c0*d0*e)+(a0*b0*c*d0*e0)+(a0*b0*c0*d*e0)-(a*b0*c*d*e0)+(a*b0*c0*d0*e0)-(a*b0*c*d0*e)-(a*b0*c0*d*e)-(a0*b*c*d*e0)+(a0*b*c0*d0*e0)-(a0*b*c*d0*e)-(a0*b*c0*d*e)
+            img = (a*b*c*d*e0)-(a*b*c0*d0*e0)+(a*b*c*d0*e)+(a*b*c0*d*e)-(a0*b0*c*d*e0)+(a0*b0*c0*d0*e0)-(a0*b0*c*d0*e)-(a0*b0*c0*d*e)+(a*b0*c*d*e)-(a*b0*c0*d0*e)-(a*b0*c*d0*e0)-(a*b0*c0*d*e0)+(a0*b*c*d*e)-(a0*b*c0*d0*e)-(a0*b*c*d0*e0)-(a0*b*c0*d*e0)
+            result = f'{real}+{img}i'
+            if (img<0):
+                result = result.replace("+","")
+            
         return result
 
     def division ():
