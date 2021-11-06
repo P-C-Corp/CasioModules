@@ -94,6 +94,7 @@ class Complexes():
             
         a = rezs[0]; a0 = imzs[0] 
         b = rezs[1]; b0 = imzs[1]
+        c = rezs[2]; c0 = imzs[2]
         
         long = len(rezs)
         longb = len(imzs)
@@ -104,6 +105,44 @@ class Complexes():
             result = f"{real}+{img}i"
             if (img<0):
                 result = result.replace("+","")
+            
+            
+        if (long == longb == 3):
+            real = (a*b*c)-(a0*b0*c)-(a*b0*c0)-(a0*b*c0)
+            img = (a*b0*c)+(a0*b*c)+(a*b*c0)-(a0*b0*c0)
+            result = f'{real}+{img}i'
+            if (img<0):
+                result = result.replace("+","")
+            
+            
+        if (long == longb == 4):
+            v = 5
+            reel1 = rezs.values()
+            reel = list(reel1)
+            imaginaire1 = imzs.values()
+            imaginaire = list(imaginaire1)
+            
+            while (v>=3):
+                print(a)
+                print(a0)
+                print(b)
+                print(b0)
+                real = (a*b)-(a0*b0)
+                reel.append(real)
+                img = (a*b0)+(b*a0)
+                imaginaire.append(img)
+                print(reel)
+                print(imaginaire)
+                if (3<=v>=4):
+                    k=1
+                    a = reel[0+2*k]; a0 = imaginaire[0+2*k] 
+                    b = reel[1+2*k]; b0 = imaginaire[1+2*k]
+                    k+=1
+                v -= 1
+        result = f"{real}+{img}i"
+        if (img<0):
+                result = result.replace("+","")
+                
         return result
 
     def division ():
