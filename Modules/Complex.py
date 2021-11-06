@@ -95,6 +95,7 @@ class Complexes():
         a = rezs[0]; a0 = imzs[0] 
         b = rezs[1]; b0 = imzs[1]
         c = rezs[2]; c0 = imzs[2]
+        d = rezs[3]; d0 = imzs[3]
         
         long = len(rezs)
         longb = len(imzs)
@@ -116,31 +117,10 @@ class Complexes():
             
             
         if (long == longb == 4):
-            v = 5
-            reel1 = rezs.values()
-            reel = list(reel1)
-            imaginaire1 = imzs.values()
-            imaginaire = list(imaginaire1)
-            
-            while (v>=3):
-                print(a)
-                print(a0)
-                print(b)
-                print(b0)
-                real = (a*b)-(a0*b0)
-                reel.append(real)
-                img = (a*b0)+(b*a0)
-                imaginaire.append(img)
-                print(reel)
-                print(imaginaire)
-                if (3<=v>=4):
-                    k=1
-                    a = reel[0+2*k]; a0 = imaginaire[0+2*k] 
-                    b = reel[1+2*k]; b0 = imaginaire[1+2*k] 
-                    k+=1
-                v -= 1
-        result = f"{real}+{img}i"
-        if (img<0):
+            real = (a*b*c*d)-(a*b*c0*d0)-(a*b0*c*d0)-(a*b0*c0*d)-(a0*b*c*d0)-(a0*b*c0*d)-(a0*b0*c*d)+(a0*b0*c0*d0)
+            img = (a*b*c*d0)+(a*b*c0*d)+(a*b0*c*d)-(a*b0*c0*d0)+(a0*b*c*d)-(a0*b*c0*d0)-(a0*b0*c*d0)-(a0*b0*c0*d)
+            result = f'{real}+{img}i'
+            if (img<0):
                 result = result.replace("+","")
                 
         return result
