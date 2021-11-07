@@ -1,5 +1,4 @@
 from math import*
-from fractions import Fraction
 
 #rules
 print('Enter 0 when you want to answer no to the question')
@@ -152,9 +151,10 @@ class Complexes():
         longb = len(imzs)
         
         if (long == longb == 2):
-            real = Fraction(((a*b)+(a0*b0))/((b**2)+(b0**2)))
-            img = Fraction(((b*a0)-(a*b0))/((b**2)+(b0**2)))
-            result = f'{real}+{img}i'
+            real = (a*b)+(a0*b0)
+            img = (b*a0)-(a*b0)
+            denom = (b**2)+(b0**2)
+            result = f'{real}/{denom} + {img}/{denom}i'
             if (img<0):
                 result = result.replace("+","")
             
