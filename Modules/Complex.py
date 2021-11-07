@@ -1,4 +1,5 @@
 from math import*
+from fractions import Fraction
 
 #rules
 print('Enter 0 when you want to answer no to the question')
@@ -143,6 +144,21 @@ class Complexes():
             rezs[rank] = float(a[0])
             imzs[rank] = float(a[1].replace("i",""))
             rank += 1
+            
+        a = rezs[0]; a0 = imzs[0] 
+        b = rezs[1]; b0 = imzs[1]
+        
+        long = len(rezs)
+        longb = len(imzs)
+        
+        if (long == longb == 2):
+            real = Fraction()
+            img = Fraction()
+            result = f'{real}+{img}i'
+            if (img<0):
+                result = result.replace("+","")
+            
+        return result
 
 operation = int(input("operation ="))
 
