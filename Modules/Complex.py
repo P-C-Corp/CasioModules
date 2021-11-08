@@ -146,6 +146,7 @@ class Complexes():
             
         a = rezs[0]; a0 = imzs[0] 
         b = rezs[1]; b0 = imzs[1]
+        c = rezs[2]; c0 = imzs[2]
         
         long = len(rezs)
         longb = len(imzs)
@@ -154,6 +155,14 @@ class Complexes():
             real = (a*b)+(a0*b0)
             img = (b*a0)-(a*b0)
             denom = (b**2)+(b0**2)
+            result = f'{real}/{denom} + {img}/{denom}i'
+            if (img<0):
+                result = result.replace("+","")
+            
+        if (long == longb == 3):
+            real = ((a*b*c)-(a*b0*c0)+(a0*b*c0)+(a0*b0*c))
+            img = ((a0*b*c)-(a0*b0*c0)-(a*b*c0)-(a*b0*c))
+            denom = (((b*c)-(b0*c0)**2)+((b*c0)+(b0*c)**2))
             result = f'{real}/{denom} + {img}/{denom}i'
             if (img<0):
                 result = result.replace("+","")
