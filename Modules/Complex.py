@@ -167,6 +167,10 @@ class Complexes():
             if (img<0):
                 result = result.replace("+","")
             
+        if(longb == longb == 4):
+            real = 0
+            img = 0
+
         return result
 
 operation = int(input("operation ="))
