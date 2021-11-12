@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 import queue as q
-from PyQt5.QtCore import QObject, QTextStreamManipulator, QThread, QWaitCondition, pyqtSignal
+from PyQt5.QtCore import Q_ARG, QObject, QTextStreamManipulator, QThread, QWaitCondition, pyqtSignal, pyqtSlot
 import sys
 import os
 import platform
@@ -89,22 +89,32 @@ class Connect(QtWidgets.QMainWindow):
 
 class Connexion(QtWidgets.QMainWindow):
     window_closed = pyqtSignal()
+    
+    
     def __init__(self):
+
         
         super(Connexion, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi(f'{pathToUi()}/connecting.ui', self) # Load the .ui file
+
         self.label_2.setPixmap(QtGui.QPixmap(f"{path}/screens/images/logo.png"))
+        
         self.progressBar.setValue(0)
+        
         self.setFixedWidth(700)
         self.setFixedHeight(320)
-        self.status = bool
+
+        InvoiceRunnable.ifNoConnexion.connect(showDialog)
+        
         self.show()
+        
         self.sendInvoice()
         
 
     def sendInvoice(self):
         runnable = InvoiceRunnable(self.progressBar)
         QtCore.QThreadPool.globalInstance().start(runnable)
+        
     
     def closeWindow(self, event):
         self.window_closed.emit()
@@ -136,11 +146,16 @@ class Alert(QtWidgets.QDialog):
     
 
 class InvoiceRunnable(QtCore.QRunnable):
+    ifNoConnexion = pyqtSignal()
+
     def __init__(self, progressbar):
         QtCore.QRunnable.__init__(self)
         self.progressbar = progressbar
+        
+        
 
     def run(self):
+        
         for i in range(1, 101):
             currentPercentage = i
             time.sleep(0.02)
@@ -155,17 +170,15 @@ class InvoiceRunnable(QtCore.QRunnable):
                     break
                     
                 else:
+                    datas = ["test", 'test2']
+                    self.ifNoConnexion.emit("test")
                     
-                    InMain.call(showDialog())
 
-
-                    print("connected")
-
-def showDialog():
+def showDialog(datas):
     msgBox = QtWidgets.QMessageBox()
     msgBox.setIcon(QtWidgets.QMessageBox.Information)
-    msgBox.setText("Message box pop up window")
-    msgBox.setWindowTitle("QMessageBox Example")
+    msgBox.setText("test")
+    msgBox.setWindowTitle("titre")
     msgBox.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Close)
     #msgBox.buttonClicked.connect(msgButtonClick)
 
@@ -174,25 +187,6 @@ def showDialog():
         print('OK clicked')
 
 
-class InMain(QObject):
-
-    sig = pyqtSignal()
-    
-    def __init__(self):
-        super().__init__()
-        self.queue = q.Queue()
-	# Notice we use a Qt.QueuedConnection here, change to your liking.
-        self.sig.connect(self.execute_funs, QtCore.Qt.QueuedConnection)
-
-    def execute_funs(self):
-        while not self.queue.empty():
-            (fn, args, kwargs) = self.queue.get()
-            fn(*args, **kwargs)
-    
-    def call(self, fn, *args, **kwargs):
-        """Schedule a function to be called on the main thread."""
-        self.queue.put( (fn, args, kwargs) )
-        self.sig.emit()
 
 
 

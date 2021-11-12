@@ -1,6 +1,6 @@
 from division import div
 import math
-div = div()
+
 quotient = div.solve()
 class operations():
     def __init__(self) -> None:
@@ -26,7 +26,8 @@ class operations():
 
     def binomial(n,p):
         if p<=n :
-            return quotient(math.factorial(n),math.factorial(p) * math.factorial(n - p))
+            
+            return div.solve((math.factorial(n),math.factorial(p) * math.factorial(n - p)))
         else :
             return 0
     

@@ -1,11 +1,11 @@
 from math import *
-import numpy as np
+
 class vec():
     def vecteur(x,y,z='optionel'):
         if z=='optionel':
-            return np.array([x,y])
+            return [x,y]
         else :
-            return np.array([x,y,z])
+            return [x,y,z]
 
     def norme(v):
         l=v*v;n=0
