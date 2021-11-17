@@ -92,16 +92,12 @@ class Complexes():
             imzs[rank] = float(a[1].replace("i",""))
             rank += 1
             
-        a = rezs[0]; a0 = imzs[0] 
-        b = rezs[1]; b0 = imzs[1]
-        c = rezs[2]; c0 = imzs[2]
-        d = rezs[3]; d0 = imzs[3]
-        e = rezs[4]; e0 = imzs[4]
-        
         long = len(rezs)
         longb = len(imzs)
         
         if (long == longb == 2):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
             real = (a*b)-(a0*b0)
             img = (a*b0)+(b*a0)
             result = f"{real}+{img}i"
@@ -110,6 +106,9 @@ class Complexes():
             
             
         if (long == longb == 3):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
+            c = rezs[2]; c0 = imzs[2]
             real = (a*b*c)-(a0*b0*c)-(a*b0*c0)-(a0*b*c0)
             img = (a*b0*c)+(a0*b*c)+(a*b*c0)-(a0*b0*c0)
             result = f'{real}+{img}i'
@@ -118,6 +117,10 @@ class Complexes():
             
             
         if (long == longb == 4):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
+            c = rezs[2]; c0 = imzs[2]
+            d = rezs[3]; d0 = imzs[3]
             real = (a*b*c*d)-(a*b*c0*d0)-(a*b0*c*d0)-(a*b0*c0*d)-(a0*b*c*d0)-(a0*b*c0*d)-(a0*b0*c*d)+(a0*b0*c0*d0)
             img = (a*b*c*d0)+(a*b*c0*d)+(a*b0*c*d)-(a*b0*c0*d0)+(a0*b*c*d)-(a0*b*c0*d0)-(a0*b0*c*d0)-(a0*b0*c0*d)
             result = f'{real}+{img}i'
@@ -125,6 +128,11 @@ class Complexes():
                 result = result.replace("+","")
             
         if (long == longb == 5):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
+            c = rezs[2]; c0 = imzs[2]
+            d = rezs[3]; d0 = imzs[3]
+            e = rezs[4]; e0 = imzs[4]
             real = (a*b*c*d*e)-(a*b*c0*d0*e)-(a*b*c*d0*e0)-(a*b*c0*d*e0)-(a0*b0*c*d*e)+(a0*b0*c0*d0*e)+(a0*b0*c*d0*e0)+(a0*b0*c0*d*e0)-(a*b0*c*d*e0)+(a*b0*c0*d0*e0)-(a*b0*c*d0*e)-(a*b0*c0*d*e)-(a0*b*c*d*e0)+(a0*b*c0*d0*e0)-(a0*b*c*d0*e)-(a0*b*c0*d*e)
             img = (a*b*c*d*e0)-(a*b*c0*d0*e0)+(a*b*c*d0*e)+(a*b*c0*d*e)-(a0*b0*c*d*e0)+(a0*b0*c0*d0*e0)-(a0*b0*c*d0*e)-(a0*b0*c0*d*e)+(a*b0*c*d*e)-(a*b0*c0*d0*e)-(a*b0*c*d0*e0)-(a*b0*c0*d*e0)+(a0*b*c*d*e)-(a0*b*c0*d0*e)-(a0*b*c*d0*e0)-(a0*b*c0*d*e0)
             result = f'{real}+{img}i'
@@ -144,14 +152,12 @@ class Complexes():
             imzs[rank] = float(a[1].replace("i",""))
             rank += 1
             
-        a = rezs[0]; a0 = imzs[0] 
-        b = rezs[1]; b0 = imzs[1]
-        c = rezs[2]; c0 = imzs[2]
-        
         long = len(rezs)
         longb = len(imzs)
         
         if (long == longb == 2):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
             real = (a*b)+(a0*b0)
             img = (b*a0)-(a*b0)
             denom = (b**2)+(b0**2)
@@ -160,6 +166,9 @@ class Complexes():
                 result = result.replace("+","")
             
         if (long == longb == 3):
+            a = rezs[0]; a0 = imzs[0] 
+            b = rezs[1]; b0 = imzs[1]
+            c = rezs[2]; c0 = imzs[2]
             real = ((a*b*c)-(a*b0*c0)+(a0*b*c0)+(a0*b0*c))
             img = ((a0*b*c)-(a0*b0*c0)-(a*b*c0)-(a*b0*c))
             denom = (((b*c)-(b0*c0)**2)+((b*c0)+(b0*c)**2))
