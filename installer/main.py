@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 import queue as q
-from PyQt5.QtCore import Q_ARG, QObject, QTextStreamManipulator, QThread, QWaitCondition, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Q_ARG, QCoreApplication, QObject, QTextStreamManipulator, QThread, QWaitCondition, pyqtSignal, pyqtSlot
 import sys
 import os
 import platform
@@ -8,6 +8,9 @@ import getpass
 from PyQt5.QtGui import QPixmap
 import requests
 import time
+
+
+
 
 global app
 app = None
@@ -18,6 +21,7 @@ def isNetwork()->bool:
         return True
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
+
 global path
 path = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,12 +42,11 @@ def pathToUi()->str:
         return thePath
     else:
         return path+"/screens/ui/unix"
-    
-
 
 
 
 class Connect(QtWidgets.QMainWindow):
+    window_closed = pyqtSignal()
     def __init__(self):
         
         super(Connect, self).__init__() # Call the inherited classes __init__ method
@@ -68,14 +71,11 @@ class Connect(QtWidgets.QMainWindow):
         self.label_2.setPixmap(QtGui.QPixmap(f"{path}/screens/images/logo.png"))
         self.label_4.setText('<a href=\"https://github.com/P-C-Corp/CasioModules">See Documentation</a>')
         
+        
         self.show()
 
     def toggled(self):
         self.cb.setChecked(QtCore.Qt.Checked)
-        
-
-        
-        
         
     def connectPushed(self, event):
         self.win = Connexion()
@@ -83,7 +83,10 @@ class Connect(QtWidgets.QMainWindow):
         self.win.show()
         self.close()
         
-        #event.accept()
+    def closeWindow(self, event):
+        self.window_closed.emit()
+        event.accept()
+
 
 
 
@@ -101,101 +104,114 @@ class Connexion(QtWidgets.QMainWindow):
         
         self.progressBar.setValue(0)
         
-        self.setFixedWidth(700)
-        self.setFixedHeight(320)
+        
 
-        InvoiceRunnable.ifNoConnexion.connect(showDialog)
         
         self.show()
-        
-        self.sendInvoice()
-        
+        self.startProgressBar()
 
-    def sendInvoice(self):
-        runnable = InvoiceRunnable(self.progressBar)
-        QtCore.QThreadPool.globalInstance().start(runnable)
+    def startProgressBar(self):
+        self.thread = MyThread()
+        self.thread.change_value.connect(self.progressBar.setValue)
+        self.thread.isConnection.connect(self.showAlert)
+        self.thread.next.connect(self.nextStep)
+        self.thread.start()
+
+    def nextStep(self, log):
+        print(log)
+        self.win = Install()
         
+        self.win.show()
+        self.close()
+
+    def connectPushed(self, event):
+        self.win = Connexion()
+        
+        self.win.show()
+        self.close()
+
+    def showAlert(self, isWorking):
+        ERROR = self.Alert()
+        if ERROR == 1024:
+            self.win = Connect()
+            self.win.show()
+            self.close()
+        else:
+            self.close()
+            QCoreApplication.instance().quit()
+
     
     def closeWindow(self, event):
         self.window_closed.emit()
         event.accept()
-        
-    
-class Alert(QtWidgets.QDialog):
-    EXIT_CODE_REBOOT = -123
-    window_closed = pyqtSignal()
-    def __init__(self):
-        
-        super(Alert, self).__init__() # Call the inherited classes __init__ method
-        self.setWindowTitle('Network Error')
-        self.setFixedWidth(300)
-        self.setFixedHeight(75)
-        
-        message = QtWidgets.QLabel("Can't find network,\nplease check your connexion and try again")
-        
-        self.button = QtWidgets.QPushButton('Ok')
-        self.layout = QtWidgets.QGridLayout()
-        self.layout.setColumnStretch( 300, 30)
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button)
-        self.setLayout(self.layout)
 
-    
-    def RestartApp(self):
-        QtGui.qApp.exit(self.EXIT_CODE_REBOOT )
-    
 
-class InvoiceRunnable(QtCore.QRunnable):
-    ifNoConnexion = pyqtSignal()
+    def Alert(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setGeometry(750, 500, 400, 100)
+        msg.setIcon(QtWidgets.QMessageBox.Critical)
+        msg.setText("Error :")
+        msg.setInformativeText("Unable to fetch internet connection, please check your connection and try again.")
+        msg.setWindowTitle("Interner Error")
+        msg.setDetailedText("Please report this issue at <github issues> if it persists.")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Close)
+        msg.buttonClicked.connect(self.press)
+        return msg.exec_()
 
-    def __init__(self, progressbar):
-        QtCore.QRunnable.__init__(self)
-        self.progressbar = progressbar
-        
-        
+    def press(self, button):
+        pass
 
+
+
+class MyThread(QThread):
+    isConnection = pyqtSignal(bool)
+    change_value = pyqtSignal(int)
+    next = pyqtSignal(str)
     def run(self):
         
-        for i in range(1, 101):
-            currentPercentage = i
-            time.sleep(0.02)
-            QtCore.QMetaObject.invokeMethod(self.progressbar, "setValue",
-            QtCore.Qt.QueuedConnection,
-            QtCore.Q_ARG(int, currentPercentage))
-            if currentPercentage == 40:
-                if not isNetwork():
-                    #dlg = Alert()
-                    
-                    #dlg.exec()
+        for i in range(0, 101):
+            self.change_value.emit(i)
+            if i == 40:
+                test = isNetwork()
+                if not test :
+                    self.isConnection.emit(False)
                     break
-                    
                 else:
-                    datas = ["test", 'test2']
-                    self.ifNoConnexion.emit("test")
-                    
-
-def showDialog(datas):
-    msgBox = QtWidgets.QMessageBox()
-    msgBox.setIcon(QtWidgets.QMessageBox.Information)
-    msgBox.setText("test")
-    msgBox.setWindowTitle("titre")
-    msgBox.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Close)
-    #msgBox.buttonClicked.connect(msgButtonClick)
-
-    returnValue = msgBox.exec()
-    if returnValue == QtWidgets.QMessageBox.Retry:
-        print('OK clicked')
+                    pass
+            if i == 100:
+                self.next.emit("Connected")
 
 
+            time.sleep(0.02)
 
 
+class Install(QtWidgets.QMainWindow):
+    
+    window_closed = pyqtSignal()
+    
+    
+    def __init__(self):
+        super(Install, self).__init__() # Call the inherited classes __init__ method
+        uic.loadUi(f'{pathToUi()}/WaitForInstall.ui', self) # Load the .ui file
+        self.label.setPixmap(QtGui.QPixmap(f"{path}/screens/images/logo.png"))
+        self.setFixedWidth(700)
+        self.setFixedHeight(320)
+
+        self.checkBox.setChecked(QtCore.Qt.Checked)
+        self.comboBox.addItem('test')
+
+
+        self.show()
+
+    def closeWindow(self, event):
+        self.window_closed.emit()
+        event.accept()
 
 
 if __name__ == "__main__":
-    currentExitCode = Alert.EXIT_CODE_REBOOT
-    while currentExitCode == Alert.EXIT_CODE_REBOOT:
-        a = QtWidgets.QApplication(sys.argv)
-        w = Connect()
-        w.show()
-        currentExitCode = a.exec_()
-        a = None 
+
+    a = QtWidgets.QApplication(sys.argv)
+    w = Connect()
+    w.show()
+    currentExitCode = a.exec_()
+    a = None 
