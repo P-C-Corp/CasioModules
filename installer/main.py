@@ -153,7 +153,7 @@ class Connexion(QtWidgets.QMainWindow):
         msg.setText("Error :")
         msg.setInformativeText("Unable to fetch internet connection, please check your connection and try again.")
         msg.setWindowTitle("Interner Error")
-        msg.setDetailedText("Please report this issue at <github issues> if it persists.")
+        msg.setDetailedText(f"Please report this issue at <github issues> if it persists.")
         msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Close)
         msg.buttonClicked.connect(self.press)
         return msg.exec_()
@@ -185,8 +185,8 @@ class MyThread(QThread):
             time.sleep(0.02)
 
 
+
 class Install(QtWidgets.QMainWindow):
-    
     window_closed = pyqtSignal()
     
     
@@ -198,10 +198,64 @@ class Install(QtWidgets.QMainWindow):
         self.setFixedHeight(320)
 
         self.checkBox.setChecked(QtCore.Qt.Checked)
-        self.comboBox.addItem('test')
+        self.check = True
+        drivers = self.Drivers()
 
-
+        if drivers == "error":
+            self.close()
+            QCoreApplication.instance().quit()
+        else:
+            for driver in drivers:
+                self.comboBox.addItem(f"CASIO ({driver}:\\)")
+                
+        self.pushButton_2.clicked.connect(self.Refresh)
         self.show()
+        print(self.check)
+
+    def Refresh(self):
+        for i in range(self.comboBox.count()):
+            self.comboBox.removeItem(i) 
+        drivers = self.Drivers()
+        self.comboBox.addItem('Connect calculator')
+        for driver in drivers:
+                self.comboBox.addItem(f"CASIO ({driver}:\\)")
+        
+
+    def Drivers(self):
+        global close
+
+        drivers = []
+        if platform.system() =="Windows":
+            for root in "ABCDEFGFIJKLMNOPQRSTUVWXYZ":
+                try:
+                    with open(f'{root}://@MainMem/SETUP.g3m', 'rb'):
+                        drivers.append(root)
+                        pass
+                except:
+                    pass
+            
+        else:
+            self.check = False
+            ERROR = self.Alert()
+            return "error"
+                
+        return drivers
+
+
+    def Alert(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setGeometry(750, 500, 400, 100)
+        msg.setIcon(QtWidgets.QMessageBox.Critical)
+        msg.setText("Error :")
+        msg.setInformativeText("Operation isn't available yet on your system.")
+        msg.setWindowTitle("OS Error")
+        msg.setDetailedText(f"OS : {platform.system()} Please report this issue at <github issues> if it persists.")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Close)
+        msg.buttonClicked.connect(self.press)
+        return msg.exec_()
+
+    def press(self, button):
+        pass
 
     def closeWindow(self, event):
         self.window_closed.emit()

@@ -9,36 +9,25 @@ print('Enter 4 for multiplication')
 print('Enter 5 for division')
 
 class Complexes():
-    def liste():
+    def liste(number):
         Complexe = []
-        i = complex (0,1)
-        Complex = True
-        if (Complex==True):
+
+        for i in range(0, number):
             
             Rez = float(input('Rez='))
             Imz = float(input('Imz='))
             Complex1 = f"{Rez}+i{Imz}"
             Complexe.append(Complex1)
-            c = int(input('Wanna other complexe? ='))
-            
-            if (c==True):
-                
-                b = int(input('Number of other complexe you want ='))
-                while (b > 0):
-                    #DefinitLeComplexe = int(input('Enter 1 ='))
-                    Rez = float(input('Rez='))
-                    Imz = float(input('Imz='))
-                    Complex1 = f"{Rez}+i{Imz}"
-                    Complexe.append(Complex1)
-                    b -= 1
-                    
-                    if (b==0):
-                        break
-                
+
         return (Complexe)
 
-    def addition():
-        numbers = Complexes.liste() 
+    def addition(numbers, *others):
+        others = "§".join(others)
+        numbers = numbers + others.split("§")
+        for i in numbers:
+            if i == "":
+                a = numbers.index(i)
+                numbers.pop(a)
         rezs = {}
         imzs = {}
         rank = 0
@@ -59,8 +48,13 @@ class Complexes():
             result = result.replace('+', '')
         return result
 
-    def substraction ():
-        numbers = Complexes.liste()
+    def substraction (numbers, *others):
+        others = "§".join(others)
+        numbers = numbers + others.split("§")
+        for i in numbers:
+            if i == "":
+                a = numbers.index(i)
+                numbers.pop(a)
         rezs = {}
         imzs = {}
         rank = 0
@@ -81,8 +75,13 @@ class Complexes():
             result = result.replace("+","")
         return result
 
-    def multiplication ():
-        numbers = Complexes.liste()
+    def multiplication (numbers, *others):
+        others = "§".join(others)
+        numbers = numbers + others.split("§")
+        for i in numbers:
+            if i == "":
+                a = numbers.index(i)
+                numbers.pop(a)
         rezs = {}
         imzs = {}
         rank = 0
@@ -141,8 +140,13 @@ class Complexes():
             
         return result
 
-    def division ():
-        numbers = Complexes.liste()
+    def division (numbers, *others):
+        others = "§".join(others)
+        numbers = numbers + others.split("§")
+        for i in numbers:
+            if i == "":
+                a = numbers.index(i)
+                numbers.pop(a)
         rezs = {}
         imzs = {}
         rank = 0
@@ -187,7 +191,7 @@ operation = int(input("operation ="))
 if (operation == 2):
     
     
-    print(Complexes.addition())
+    print(Complexes.addition(Complexes.liste(int(input('How many ? ')))))
 
 if (operation == 3):
     
